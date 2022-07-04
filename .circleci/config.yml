@@ -21,6 +21,8 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
   say-world:
+    environment:
+      MY_ENV_VAR_1: "Mohamed Rabie"
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -32,6 +34,9 @@ jobs:
       - run:
           name: "Say world"
           command: "echo World!"
+      - run:
+          name: "Print name!"
+          command: echo $MY_ENV_VAR_1
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
