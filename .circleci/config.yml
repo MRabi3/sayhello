@@ -13,15 +13,15 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
       - checkout
       - run:
           name: "Say hello"
           command: echo "Hello World!" > ~/output.txt
-
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+      
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
   say-world:
@@ -35,11 +35,12 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: "Say world"
           command: cat ~/output.txt
-      - attach_workspace:
-          at: ~/
+      
       - run:
           name: "Print name!"
           command: echo $MY_ENV_VAR_1
