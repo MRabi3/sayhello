@@ -16,7 +16,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/output.txt
+            - output.txt
       - checkout
       - run:
           name: "Say hello"
@@ -39,7 +39,7 @@ jobs:
           at: ~/
       - run:
           name: "Say world"
-          command: cat output.txt
+          command: cat ~/output.txt
       - run:
           name: "Print name!"
           command: echo $MY_ENV_VAR_1
