@@ -24,6 +24,19 @@ jobs:
           root: ~/
           paths:
             - output.txt
+  
+  on_fail:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: circleci/node:13.8.0
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run:
+          name: "Say failed"
+          command: echo "Failed!"
       
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -48,7 +61,13 @@ jobs:
           name: "Print name!"
           command: echo $MY_ENV_VAR_1
       - print_pipeline_id
-
+      - run:
+          name: "fail"
+          command: return 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -58,3 +77,4 @@ workflows:
       - say-world:
           requires:
             - say-hello
+      
